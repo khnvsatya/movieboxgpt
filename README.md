@@ -29,3 +29,9 @@
 - Update store with Trailer Video Data
 - Embedded the Youtube Video and make it autoplay and mute
 - Make MainContainer look awesome
+- Build Secondary Container
+- Build Movie List
+- Build Movie Card
+- TMDB image CDN URL
+- Used "tailwind-scrollbar-hide" tailwind plugin to hide scrollbar for Movie list
+- Custom Hooks for each Movie List
