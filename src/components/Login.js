@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
-import { BG_URL } from "../utils/constants";
+import { AVATAR_URL, BG_URL } from "../utils/constants";
 import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
@@ -8,14 +8,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [showPassword, SetShowPassword] = useState(false);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const name = useRef(null);
@@ -39,8 +38,7 @@ const Login = () => {
           console.log(user);
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL:
-              "https://media.licdn.com/dms/image/D5603AQEWKjl0Cb5Rvw/profile-displayphoto-shrink_200_200/0/1672116335784?e=1698883200&v=beta&t=11ehJ4JRuM3ZpIDrl3Yzl4C205aE45yOnkCiYtSJO1s",
+            photoURL: AVATAR_URL,
           })
             .then(() => {
               // Profile updated!
@@ -53,7 +51,6 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
               // ...
             })
             .catch((error) => {
@@ -80,7 +77,7 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           console.log("logged in", user);
-          navigate("/browse");
+
           // ...
         })
         .catch((error) => {
