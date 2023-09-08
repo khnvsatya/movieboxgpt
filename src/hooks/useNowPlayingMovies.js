@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 const useNowPlayingMovies = () => {
   const dispatch = useDispatch();
 
-  // const user = useSelector((store) => store.user);
+  const nowPlayingMovies = useSelector(
+    (store) => store.movies.nowPlayingMovies
+  );
 
   const getNowPlayingMovies = async () => {
     const data = await fetch(
@@ -18,7 +20,7 @@ const useNowPlayingMovies = () => {
   };
 
   useEffect(() => {
-    getNowPlayingMovies();
+    !nowPlayingMovies && getNowPlayingMovies();
   }, []);
 };
 

@@ -20,6 +20,7 @@ const Login = () => {
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+
   const handleButtonClick = () => {
     //validate form data
     const message = checkValidData(email.current.value, password.current.value);
@@ -35,7 +36,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
           updateProfile(user, {
             displayName: name.current.value,
             photoURL: AVATAR_URL,
@@ -55,7 +55,7 @@ const Login = () => {
             })
             .catch((error) => {
               // An error occurred
-              setError(error);
+              setError(error.message);
               // ...
             });
 
@@ -76,7 +76,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log("logged in", user);
 
           // ...
         })

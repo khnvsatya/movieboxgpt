@@ -35,3 +35,6 @@
 - TMDB image CDN URL
 - Used "tailwind-scrollbar-hide" tailwind plugin to hide scrollbar for Movie list
 - Custom Hooks for each Movie List
+- Gpt Search Page
+- Gpt Search Bar
+- (\*) Multi-language feature in our App
