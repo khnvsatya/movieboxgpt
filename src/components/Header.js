@@ -5,7 +5,7 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { toggleGptSearchView } from "../utils/gptSlice";
+import { addGptMovieResult, toggleGptSearchView } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
@@ -48,6 +48,7 @@ const Header = () => {
         // ...,
       } else {
         dispatch(removeUser());
+        dispatch(addGptMovieResult({ movieNames: null, movieResults: null }));
         navigate("/");
       }
     });
@@ -70,7 +71,7 @@ const Header = () => {
                 defaultValue={defaultLang}
               >
                 {SUPPORT_LANGUAGES.map((p) => (
-                  <option key={p.id} value={p.id}>
+                  <option className="text-center" key={p.id} value={p.id}>
                     {p.name}
                   </option>
                 ))}
