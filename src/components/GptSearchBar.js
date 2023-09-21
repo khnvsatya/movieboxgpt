@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { API_OPTIONS } from "../utils/constants";
 import { addGptMovieResult } from "../utils/gptSlice";
 
-const GptSearchBar = () => {
+const GptSearchBar = ({ setLoading }) => {
   const langKey = useSelector((store) => store.config?.lang);
   const searchText = useRef(null);
   const dispatch = useDispatch();
@@ -22,8 +22,6 @@ const GptSearchBar = () => {
   };
 
   const handleGptSearch = async () => {
-    console.log(searchText.current.value);
-
     const gptQuery =
       "Act as a Movie Recommendation system and suggest some movies for a query :" +
       searchText.current.value +
@@ -36,10 +34,7 @@ const GptSearchBar = () => {
       model: "gpt-3.5-turbo",
     });
 
-    console.log(gptResults.choices);
-
     if (!gptResults.choices) {
-      console.log("something went wrong");
       return null;
     }
 
@@ -55,23 +50,30 @@ const GptSearchBar = () => {
         movieResults: tmdbResults,
       })
     );
+    setLoading(false);
   };
 
   return (
     <div className="pt-[10%] flex justify-center">
       <form
         className="w-1/2 bg-black grid grid-cols-12"
-        onClick={(e) => e.preventDefault()}
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (searchText.current.value.length > 0) {
+            setLoading(true);
+            handleGptSearch();
+          }
+        }}
       >
         <input
           type="text"
-          className="p-2 m-2 col-span-9"
+          className="p-2 m-2 col-span-9 focus:outline-none"
           placeholder={lang[langKey].gptSearchPlaceholder}
           ref={searchText}
         />
         <button
+          type="submit"
           className="col-span-3 m-2 py-2 bg-red-700 text-white"
-          onClick={handleGptSearch}
         >
           {lang[langKey].search}
         </button>

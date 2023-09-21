@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { addGptMovieResult, toggleGptSearchView } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/configSlice";
+import { resetAllMovieSets } from "../utils/movieSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const Header = () => {
 
   const handleShowGpt = () => {
     dispatch(toggleGptSearchView());
+    navigate("/browse");
   };
 
   const handleSelect = (e) => {
@@ -43,11 +45,12 @@ const Header = () => {
             photoURL: photoURL,
           })
         );
-        // console.log("inside", user);
+
         navigate("/browse");
         // ...,
       } else {
         dispatch(removeUser());
+        dispatch(resetAllMovieSets());
         dispatch(addGptMovieResult({ movieNames: null, movieResults: null }));
         navigate("/");
       }
